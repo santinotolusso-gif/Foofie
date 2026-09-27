@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block titulo %}Mi perfil — SaborIA{% endblock %}
+
+{% block contenido %}
+<div class="pagina-angosta" style="padding-top:2rem; padding-bottom:3rem;">
+  <div class="tarjeta-simple">
+    <div style="display:flex; align-items:center; gap:1.25rem; margin-bottom:1.5rem;">
+      <div class="perfil-avatar">{{ current_user.nombre[0] | upper }}</div>
+      <div>
+        <h1 style="font-size:1.4rem;">{{ current_user.nombre }}</h1>
+        <p style="color:var(--warm-400); font-size:.9rem;">{{ current_user.email }}</p>
+      </div>
+    </div>
+
+    <div class="chip" style="display:inline-block; margin-bottom:1.5rem;">
+      Miembro desde {{ current_user.fecha_registro.strftime('%d/%m/%Y') }}
+    </div>
+
+    <p style="margin-bottom:1.5rem;">Tenés <strong>{{ cantidad_favoritos }}</strong> receta(s) guardada(s) en favoritos.</p>
+
+    <div style="display:flex; gap:.75rem; flex-wrap:wrap;">
+      <a href="{{ url_for('favoritos') }}" class="btn btn-primario">Ver mis favoritos</a>
+      <a href="{{ url_for('logout') }}" class="btn btn-secundario">Cerrar sesión</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

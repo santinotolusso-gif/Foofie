@@ -1,0 +1,293 @@
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --font-display: 'Lora', Georgia, serif;
+  --font-body: 'Outfit', system-ui, sans-serif;
+
+  --cream-50: #FDFBF8;
+  --cream-100: #FAF7F2;
+  --cream-200: #EDE9E1;
+  --cream-300: #DDD8CE;
+
+  --olive-400: #8A9B4D;
+  --olive-500: #6B7A3F;
+  --olive-600: #4E5A2E;
+
+  --orange-400: #F09050;
+  --orange-500: #E07B39;
+  --orange-600: #C96828;
+
+  --warm-300: #B5AEA5;
+  --warm-400: #8B847B;
+  --warm-500: #6B6560;
+  --warm-600: #4A4540;
+  --warm-700: #2C2A25;
+
+  --rojo-500: #E5484D;
+  --ambar-500: #D9A441;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  background-color: var(--cream-100);
+  color: var(--warm-700);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main { flex: 1; }
+
+h1, h2, h3, h4 { font-family: var(--font-display); margin: 0; }
+
+a { color: inherit; text-decoration: none; }
+
+img { max-width: 100%; display: block; }
+
+.contenedor {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+/* ---------- Navbar ---------- */
+.navbar {
+  background: #fff;
+  border-bottom: 1px solid var(--cream-200);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  box-shadow: 0 1px 2px rgba(0,0,0,.04);
+}
+.navbar .contenedor {
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.navbar-logo { display: flex; align-items: center; gap: .6rem; background: none; border: none; cursor: pointer; }
+.navbar-logo-icono {
+  width: 2.25rem; height: 2.25rem; border-radius: .75rem;
+  background: var(--olive-500); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+}
+.navbar-logo-texto { font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; color: var(--warm-700); }
+.navbar-logo-texto span { color: var(--olive-500); }
+
+.navbar-links { display: none; align-items: center; gap: .25rem; }
+.navbar-link {
+  position: relative;
+  padding: .5rem 1rem; border-radius: .5rem;
+  font-size: .875rem; font-weight: 500;
+  color: var(--warm-500);
+}
+.navbar-link:hover { color: var(--warm-700); background: var(--cream-100); }
+.navbar-link.activo { color: var(--olive-600); background: rgba(107,122,63,.1); }
+.navbar-badge {
+  position: absolute; top: -.25rem; right: -.25rem;
+  background: var(--orange-500); color: #fff; font-size: .65rem;
+  border-radius: 9999px; width: 1.1rem; height: 1.1rem;
+  display: flex; align-items: center; justify-content: center;
+}
+
+.btn-usuario {
+  display: inline-flex; align-items: center; gap: .5rem;
+  background: var(--olive-500); color: #fff;
+  padding: .5rem 1rem; border-radius: 9999px;
+  font-size: .875rem; font-weight: 500; border: none; cursor: pointer;
+}
+.btn-usuario:hover { background: var(--olive-600); }
+
+.navbar-hamburguesa {
+  display: inline-flex; background: none; border: none; padding: .5rem;
+  border-radius: .5rem; color: var(--warm-600); cursor: pointer;
+}
+.navbar-movil {
+  display: none;
+  background: #fff; border-top: 1px solid var(--cream-200);
+  padding: 1rem 1.25rem; flex-direction: column; gap: .25rem;
+}
+.navbar-movil.abierto { display: flex; }
+.navbar-movil .navbar-link { display: flex; justify-content: space-between; padding: .75rem; border-radius: .75rem; font-size: 1rem; }
+
+@media (min-width: 768px) {
+  .navbar-links { display: flex; }
+  .navbar .btn-usuario-desktop { display: inline-flex; }
+  .navbar-hamburguesa, .navbar-movil { display: none !important; }
+}
+
+/* ---------- Botones y formularios genéricos ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+  font-family: var(--font-body); font-weight: 500; font-size: .9rem;
+  padding: .7rem 1.4rem; border-radius: .9rem; border: none; cursor: pointer;
+  transition: background-color .15s ease;
+}
+.btn-primario { background: var(--olive-500); color: #fff; }
+.btn-primario:hover { background: var(--olive-600); }
+.btn-secundario { background: #fff; color: var(--warm-700); border: 1px solid var(--cream-300); }
+.btn-secundario:hover { background: var(--cream-100); }
+.btn-peligro { background: var(--rojo-500); color: #fff; }
+.btn-bloque { width: 100%; }
+
+.campo { display: flex; flex-direction: column; gap: .4rem; margin-bottom: 1rem; }
+.campo label { font-size: .8rem; font-weight: 500; color: var(--warm-500); text-transform: uppercase; letter-spacing: .03em; }
+.campo input, .campo select {
+  font-family: var(--font-body); font-size: .95rem; color: var(--warm-700);
+  background: var(--cream-50); border: 1px solid var(--cream-300);
+  border-radius: .8rem; padding: .7rem .9rem; outline: none;
+}
+.campo input:focus, .campo select:focus { border-color: var(--olive-400); }
+
+/* ---------- Buscador ---------- */
+.buscador { width: 100%; }
+.buscador-caja {
+  display: flex; align-items: center; gap: .5rem;
+  background: #fff; border: 2px solid var(--cream-300);
+  border-radius: 1.1rem; padding: .35rem .35rem .35rem .9rem;
+  box-shadow: 0 1px 2px rgba(0,0,0,.04);
+}
+.buscador-caja:focus-within { border-color: var(--olive-400); }
+.buscador-caja input { flex: 1; border: none; background: none; outline: none; font-family: var(--font-body); font-size: 1rem; padding: .6rem 0; color: var(--warm-700); }
+.buscador-caja button { background: var(--olive-500); color: #fff; border: none; border-radius: .75rem; padding: .75rem 1.3rem; font-weight: 500; cursor: pointer; font-family: var(--font-body); }
+.buscador-caja button:hover { background: var(--olive-600); }
+
+.form-busqueda-secundaria { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 1rem; }
+.form-busqueda-secundaria .campo { margin: 0; flex: 1; min-width: 12rem; }
+
+/* ---------- Hero (inicio) ---------- */
+.hero { background: linear-gradient(180deg, var(--cream-200), var(--cream-100)); padding: 3.5rem 0 3rem; text-align: center; }
+.hero h1 { font-size: 2.2rem; color: var(--warm-700); margin-bottom: .75rem; }
+.hero h1 span { color: var(--olive-500); }
+.hero p { color: var(--warm-500); max-width: 34rem; margin: 0 auto 1.75rem; }
+.hero .buscador { max-width: 38rem; margin: 0 auto; }
+
+/* ---------- Secciones ---------- */
+.seccion { padding: 3rem 0; }
+.seccion-titulo { font-size: 1.5rem; color: var(--warm-700); margin-bottom: 1.5rem; }
+.seccion-titulo small { display: block; font-family: var(--font-body); font-size: .8rem; color: var(--olive-500); text-transform: uppercase; letter-spacing: .08em; margin-bottom: .35rem; }
+
+/* ---------- Grillas ---------- */
+.grilla-categorias { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+.categoria-card {
+  background: #fff; border: 1px solid var(--cream-200); border-radius: 1.25rem;
+  padding: 1.25rem; text-align: center; transition: box-shadow .15s ease, transform .15s ease;
+}
+.categoria-card:hover { box-shadow: 0 4px 14px rgba(0,0,0,.06); transform: translateY(-2px); }
+.categoria-card .icono { font-size: 1.8rem; margin-bottom: .5rem; }
+.categoria-card .nombre { font-weight: 600; font-size: .95rem; }
+
+.grilla-recetas { display: grid; grid-template-columns: 1fr; gap: 1.25rem; }
+
+/* ---------- Tarjeta de receta ---------- */
+.receta-card {
+  background: #fff; border: 1px solid var(--cream-200); border-radius: 1.25rem;
+  overflow: hidden; box-shadow: 0 1px 2px rgba(0,0,0,.04);
+  display: flex; flex-direction: column; transition: box-shadow .2s ease;
+}
+.receta-card:hover { box-shadow: 0 6px 18px rgba(0,0,0,.08); }
+.receta-card-imagen { position: relative; height: 11.5rem; background: var(--cream-200); overflow: hidden; }
+.receta-card-imagen img { width: 100%; height: 100%; object-fit: cover; transition: transform .3s ease; }
+.receta-card:hover .receta-card-imagen img { transform: scale(1.05); }
+
+.tags-dieta { position: absolute; bottom: .65rem; left: .65rem; display: flex; gap: .4rem; }
+.tag-dieta { color: #fff; font-size: .68rem; padding: .15rem .55rem; border-radius: 9999px; font-weight: 500; }
+.tag-dieta.vegano { background: var(--olive-500); }
+.tag-dieta.sin-gluten { background: var(--ambar-500); }
+
+.btn-favorito {
+  position: absolute; top: .65rem; right: .65rem;
+  width: 2.1rem; height: 2.1rem; border-radius: 9999px; border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(255,255,255,.92); color: var(--warm-400); box-shadow: 0 1px 3px rgba(0,0,0,.15);
+}
+.btn-favorito.activo { background: var(--rojo-500); color: #fff; }
+
+.receta-card-contenido { padding: 1.1rem; display: flex; flex-direction: column; flex: 1; gap: .35rem; }
+.receta-card-cat { font-size: .72rem; text-transform: uppercase; letter-spacing: .05em; color: var(--warm-400); }
+.receta-card-titulo { font-size: 1.05rem; font-weight: 600; color: var(--warm-700); }
+.receta-card-titulo:hover { color: var(--olive-600); }
+.receta-card-desc { font-size: .85rem; color: var(--warm-400); line-height: 1.4; flex: 1; }
+.receta-card-pie { display: flex; align-items: center; justify-content: space-between; margin-top: .5rem; }
+.receta-card-meta { display: flex; gap: .75rem; color: var(--warm-400); font-size: .75rem; }
+.receta-card-ver { color: var(--olive-500); font-size: .75rem; font-weight: 600; }
+
+/* ---------- Estados vacíos / avisos ---------- */
+.estado-vacio { text-align: center; padding: 3rem 1rem; color: var(--warm-400); }
+.estado-vacio .icono { font-size: 2.5rem; margin-bottom: .75rem; }
+
+.aviso { border-radius: 1rem; padding: 1rem 1.25rem; font-size: .875rem; line-height: 1.5; margin-bottom: 1.25rem; }
+.aviso-error { background: #FBEAEA; color: #8A2A2E; border: 1px solid #F2C6C8; }
+.aviso-info { background: #EEF1E6; color: var(--olive-600); border: 1px solid #DCE3C8; }
+.aviso-exito { background: #EAF3E3; color: var(--olive-600); border: 1px solid #CFE1BC; }
+.aviso-advertencia { background: #FCF3E3; color: #8A5A1F; border: 1px solid #F2DFB8; }
+
+.spinner-carga { display: none; align-items: center; gap: .6rem; color: var(--warm-500); font-size: .9rem; padding: 1.5rem 0; }
+.spinner-carga.activo { display: flex; }
+.spinner-circulo {
+  width: 1.1rem; height: 1.1rem; border: 2px solid var(--cream-300);
+  border-top-color: var(--olive-500); border-radius: 50%; animation: girar .7s linear infinite;
+}
+@keyframes girar { to { transform: rotate(360deg); } }
+
+/* ---------- Flash messages ---------- */
+.flashes { max-width: 72rem; margin: 1rem auto 0; padding: 0 1.25rem; }
+
+/* ---------- Filtros ---------- */
+.panel-filtros { background: #fff; border: 1px solid var(--cream-200); border-radius: 1.25rem; padding: 1.25rem; margin-bottom: 1.5rem; }
+.panel-filtros h3 { font-family: var(--font-body); font-size: .9rem; font-weight: 600; color: var(--warm-600); margin-bottom: 1rem; }
+
+/* ---------- Detalle de receta ---------- */
+.detalle-hero { position: relative; height: 18rem; border-radius: 1.5rem; overflow: hidden; margin-bottom: 1.5rem; }
+.detalle-hero img { width: 100%; height: 100%; object-fit: cover; }
+.detalle-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
+.detalle-info { display: flex; flex-wrap: wrap; gap: .6rem; margin-bottom: 1rem; }
+.chip { background: var(--cream-200); color: var(--warm-600); font-size: .78rem; padding: .3rem .75rem; border-radius: 9999px; font-weight: 500; }
+.lista-ingredientes { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: .5rem; }
+.lista-ingredientes li { display: flex; justify-content: space-between; padding: .6rem .8rem; background: var(--cream-50); border-radius: .8rem; font-size: .9rem; }
+.lista-ingredientes .cantidad { color: var(--warm-400); }
+.lista-pasos { list-style: none; padding: 0; margin: 0; counter-reset: paso; display: flex; flex-direction: column; gap: 1rem; }
+.lista-pasos li { display: flex; gap: 1rem; align-items: flex-start; }
+.lista-pasos li::before {
+  counter-increment: paso; content: counter(paso);
+  flex-shrink: 0; width: 2rem; height: 2rem; border-radius: 50%;
+  background: var(--olive-500); color: #fff; font-weight: 600;
+  display: flex; align-items: center; justify-content: center; font-size: .9rem;
+}
+
+/* ---------- Tabla / tarjetas de perfil y favoritos ---------- */
+.tarjeta-simple { background: #fff; border: 1px solid var(--cream-200); border-radius: 1.25rem; padding: 1.5rem; }
+.perfil-avatar { width: 4rem; height: 4rem; border-radius: 50%; background: var(--olive-500); color: #fff; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 1.5rem; font-weight: 600; }
+
+.pagina-auth { max-width: 26rem; margin: 3rem auto; padding: 0 1.25rem; }
+.pagina-angosta { max-width: 40rem; margin: 0 auto; padding: 0 1.25rem; }
+
+/* ---------- Footer ---------- */
+.footer { background: var(--warm-700); color: var(--cream-200); margin-top: 3rem; }
+.footer .contenedor { padding: 3rem 1.25rem 1.5rem; }
+.footer-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; margin-bottom: 2rem; }
+.footer h4 { font-family: var(--font-body); font-size: .85rem; font-weight: 600; color: #fff; text-transform: uppercase; letter-spacing: .05em; margin-bottom: .75rem; }
+.footer ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: .5rem; }
+.footer a { font-size: .875rem; color: var(--cream-300); }
+.footer a:hover { color: var(--olive-400); }
+.footer-abajo { border-top: 1px solid var(--warm-600); padding-top: 1.25rem; display: flex; flex-direction: column; gap: .5rem; font-size: .75rem; color: var(--warm-400); }
+
+@media (min-width: 640px) {
+  .grilla-categorias { grid-template-columns: repeat(3, 1fr); }
+  .footer-abajo { flex-direction: row; justify-content: space-between; }
+}
+@media (min-width: 768px) {
+  .grilla-recetas { grid-template-columns: repeat(2, 1fr); }
+  .hero h1 { font-size: 2.75rem; }
+  .detalle-grid { grid-template-columns: 1.1fr 1fr; }
+  .footer-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (min-width: 1024px) {
+  .grilla-recetas { grid-template-columns: repeat(3, 1fr); }
+  .grilla-categorias { grid-template-columns: repeat(6, 1fr); }
+}

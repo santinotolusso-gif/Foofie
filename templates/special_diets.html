@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block titulo %}Dietas especiales — SaborIA{% endblock %}
+
+{% block contenido %}
+<div class="contenedor" style="padding-top:2rem; padding-bottom:3rem;">
+  <h1 class="seccion-titulo" style="margin-bottom:.5rem;"><small>Alimentación especial</small>Elegí tu forma de comer</h1>
+  <p style="color:var(--warm-500); margin-bottom:2rem; max-width:40rem;">
+    Estas categorías son orientativas: se generan a partir de los datos disponibles
+    en TheMealDB y de una clasificación básica por ingredientes. No reemplazan el
+    consejo de un profesional de la salud ni una etiqueta nutricional verificada.
+  </p>
+
+  <div class="grilla-recetas">
+    <a href="{{ url_for('dieta_recetas', tipo='vegano') }}" class="tarjeta-simple" style="text-align:center;">
+      <div style="font-size:2.5rem; margin-bottom:.75rem;">🌱</div>
+      <h2 style="font-size:1.2rem; margin-bottom:.5rem;">Veganas</h2>
+      <p style="color:var(--warm-500); font-size:.9rem;">Recetas sin ingredientes de origen animal, según la categoría "Vegan" de TheMealDB.</p>
+    </a>
+    <a href="{{ url_for('dieta_recetas', tipo='celiaco') }}" class="tarjeta-simple" style="text-align:center;">
+      <div style="font-size:2.5rem; margin-bottom:.75rem;">🌾</div>
+      <h2 style="font-size:1.2rem; margin-bottom:.5rem;">Para celíacos</h2>
+      <p style="color:var(--warm-500); font-size:.9rem;">Recetas para revisar receta por receta: te avisamos qué ingredientes podrían tener gluten.</p>
+    </a>
+    <a href="{{ url_for('dieta_recetas', tipo='diabetico') }}" class="tarjeta-simple" style="text-align:center;">
+      <div style="font-size:2.5rem; margin-bottom:.75rem;">🩺</div>
+      <h2 style="font-size:1.2rem; margin-bottom:.5rem;">Para diabéticos</h2>
+      <p style="color:var(--warm-500); font-size:.9rem;">Recetas orientativas; la API no da datos de azúcar o carbohidratos, así que no se muestran valores inventados.</p>
+    </a>
+  </div>
+</div>
+{% endblock %}

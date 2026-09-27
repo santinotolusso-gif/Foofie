@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% from "_macros.html" import tarjeta_receta %}
+
+{% block titulo %}{{ titulo }} — SaborIA{% endblock %}
+
+{% block contenido %}
+<div class="contenedor" style="padding-top:2rem; padding-bottom:3rem;">
+  <p><a href="{{ url_for('dietas') }}" style="color:var(--olive-500); font-size:.85rem; font-weight:600;">← Volver a dietas especiales</a></p>
+  <h1 class="seccion-titulo" style="margin:.75rem 0 1.25rem;">{{ titulo }}</h1>
+
+  {% if tipo == 'vegano' %}
+    <div class="aviso aviso-info">
+      Estas recetas pertenecen a la categoría "Vegan" de TheMealDB. Es una clasificación
+      de la propia API, orientativa: verificá siempre los ingredientes antes de consumir.
+    </div>
+  {% elif tipo == 'celiaco' %}
+    <div class="aviso aviso-advertencia">
+      TheMealDB no tiene un filtro específico "sin gluten", así que estas recetas no están
+      garantizadas como aptas para celíacos. Entrá al detalle de cada una: ahí marcamos los
+      ingredientes que podrían contener gluten, según su nombre. Tené en cuenta también el
+      riesgo de contaminación cruzada al cocinar.
+    </div>
+  {% elif tipo == 'diabetico' %}
+    <div class="aviso aviso-advertencia">
+      La API no provee información de azúcares ni carbohidratos, por lo que no mostramos
+      esos valores para no inventarlos. Las necesidades alimentarias varían según cada
+      persona: consultá con un profesional de la salud antes de armar tu plan de comidas.
+    </div>
+  {% endif %}
+
+  {% if error_api %}
+    <div class="aviso aviso-error">{{ error_api }}</div>
+  {% elif not resultados %}
+    <div class="estado-vacio"><div class="icono">🍽️</div>No encontramos recetas para esta categoría en este momento.</div>
+  {% else %}
+    <div class="grilla-recetas">
+      {% for receta in resultados %}
+        {{ tarjeta_receta(receta, receta.idMeal in favoritos_ids) }}
+      {% endfor %}
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

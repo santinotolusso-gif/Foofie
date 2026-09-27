@@ -1,0 +1,33 @@
+{% macro tarjeta_receta(receta, es_favorito=False) %}
+<div class="receta-card">
+  <div class="receta-card-imagen">
+    <a href="{{ url_for('receta_detalle', receta_id=receta.idMeal) }}">
+      <img src="{{ receta.strMealThumb }}" alt="{{ receta.strMeal }}" loading="lazy">
+    </a>
+
+    {% if current_user.is_authenticated %}
+      <form method="POST" action="{{ url_for('favoritos_quitar' if es_favorito else 'favoritos_agregar') }}">
+        <input type="hidden" name="receta_id" value="{{ receta.idMeal }}">
+        <input type="hidden" name="receta_nombre" value="{{ receta.strMeal }}">
+        <input type="hidden" name="receta_imagen" value="{{ receta.strMealThumb }}">
+        <button type="submit" class="btn-favorito {{ 'activo' if es_favorito }}" aria-label="{{ 'Quitar de favoritos' if es_favorito else 'Guardar en favoritos' }}">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="{{ 'currentColor' if es_favorito else 'none' }}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </button>
+      </form>
+    {% else %}
+      <a href="{{ url_for('login') }}" class="btn-favorito" aria-label="Iniciá sesión para guardar en favoritos">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      </a>
+    {% endif %}
+  </div>
+
+  <div class="receta-card-contenido">
+    <span class="receta-card-cat">{{ receta.strCategory or receta.strArea or 'Receta' }}</span>
+    <a href="{{ url_for('receta_detalle', receta_id=receta.idMeal) }}" class="receta-card-titulo">{{ receta.strMeal }}</a>
+    <div class="receta-card-pie">
+      <span class="receta-card-meta">{{ receta.strArea or '' }}</span>
+      <a href="{{ url_for('receta_detalle', receta_id=receta.idMeal) }}" class="receta-card-ver">Ver receta →</a>
+    </div>
+  </div>
+</div>
+{% endmacro %}

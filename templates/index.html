@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% from "_macros.html" import tarjeta_receta %}
+
+{% block titulo %}SaborIA — Recetas para todos{% endblock %}
+
+{% block contenido %}
+<section class="hero">
+  <div class="contenedor">
+    <h1>Encontrá tu próxima <span>receta</span></h1>
+    <p>Buscá por nombre o ingrediente, explorá categorías y guardá tus favoritas. Recetas en tiempo real desde TheMealDB.</p>
+    <form class="buscador" action="{{ url_for('buscar') }}" method="get">
+      <div class="buscador-caja">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" name="q" placeholder="¿Qué te gustaría cocinar hoy?" autocomplete="off">
+        <button type="submit">Buscar</button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<section class="seccion">
+  <div class="contenedor">
+    <h2 class="seccion-titulo"><small>Explorá</small>Categorías</h2>
+    <div class="grilla-categorias">
+      {% for cat in categorias %}
+      <a class="categoria-card" href="{{ url_for('buscar', categoria=cat.id) }}">
+        <div class="icono">{{ cat.icono }}</div>
+        <div class="nombre">{{ cat.nombre }}</div>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="seccion" style="padding-top:0;">
+  <div class="contenedor">
+    <h2 class="seccion-titulo"><small>Para inspirarte</small>Recetas recomendadas</h2>
+
+    {% if error_api %}
+      <div class="aviso aviso-error">{{ error_api }}</div>
+    {% elif not recomendadas %}
+      <div class="estado-vacio"><div class="icono">🍽️</div>No pudimos traer recomendaciones en este momento.</div>
+    {% else %}
+      <div class="grilla-recetas">
+        {% for receta in recomendadas %}
+          {{ tarjeta_receta(receta) }}
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+<section class="seccion" style="padding-top:0;">
+  <div class="contenedor">
+    <div class="tarjeta-simple" style="text-align:center;">
+      <h2 class="seccion-titulo" style="margin-bottom:.5rem;">¿Comés distinto?</h2>
+      <p style="color:var(--warm-500); margin-bottom:1.25rem;">Explorá recetas pensadas para veganos, celíacos y diabéticos.</p>
+      <a href="{{ url_for('dietas') }}" class="btn btn-primario">Ver dietas especiales</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

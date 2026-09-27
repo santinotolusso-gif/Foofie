@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block titulo %}{{ receta.strMeal }} — SaborIA{% endblock %}
+
+{% block contenido %}
+<div class="contenedor" style="padding-top:2rem; padding-bottom:3rem;">
+
+  <div class="detalle-hero">
+    <img src="{{ receta.strMealThumb }}" alt="{{ receta.strMeal }}">
+  </div>
+
+  <div class="detalle-info">
+    {% if receta.strCategory %}<span class="chip">{{ receta.strCategory }}</span>{% endif %}
+    {% if receta.strArea %}<span class="chip">Cocina {{ receta.strArea }}</span>{% endif %}
+    {% if es_vegano %}<span class="chip" style="background:var(--olive-500); color:#fff;">Vegano</span>{% endif %}
+  </div>
+
+  <h1 style="font-size:1.8rem; margin-bottom:1rem;">{{ receta.strMeal }}</h1>
+
+  {% if current_user.is_authenticated %}
+    <form method="POST" action="{{ url_for('favoritos_quitar' if es_favorito else 'favoritos_agregar') }}" style="margin-bottom:1.5rem;">
+      <input type="hidden" name="receta_id" value="{{ receta.idMeal }}">
+      <input type="hidden" name="receta_nombre" value="{{ receta.strMeal }}">
+      <input type="hidden" name="receta_imagen" value="{{ receta.strMealThumb }}">
+      <button type="submit" class="btn {{ 'btn-peligro' if es_favorito else 'btn-primario' }}">
+        {{ '❤ Quitar de favoritos' if es_favorito else '♡ Guardar en favoritos' }}
+      </button>
+    </form>
+  {% else %}
+    <a href="{{ url_for('login') }}" class="btn btn-primario" style="margin-bottom:1.5rem;">Iniciá sesión para guardar en favoritos</a>
+  {% endif %}
+
+  {% if ingredientes_con_gluten %}
+    <div class="aviso aviso-advertencia">
+      <strong>Posible presencia de gluten:</strong> esta receta incluye
+      {{ ingredientes_con_gluten | join(', ') }}. Esta clasificación es orientativa
+      (se basa en el nombre de los ingredientes) y no reemplaza la verificación de
+      una etiqueta real ni el cuidado ante la contaminación cruzada. Revisá siempre
+      los ingredientes antes de consumir si sos celíaco/a.
+    </div>
+  {% endif %}
+
+  <div class="aviso aviso-info">
+    Esta receta viene de TheMealDB. La API no provee información nutricional
+    (calorías, azúcares, carbohidratos), por lo que no se muestra ese dato para
+    no inventarlo. Si tenés diabetes u otra condición alimentaria, consultá con
+    un profesional antes de guiarte solo por esta receta.
+  </div>
+
+  <div class="detalle-grid">
+    <div>
+      <h2 style="font-size:1.2rem; margin-bottom:1rem;">Ingredientes</h2>
+      {% if ingredientes %}
+        <ul class="lista-ingredientes">
+          {% for ing in ingredientes %}
+            <li><span>{{ ing.nombre }}</span><span class="cantidad">{{ ing.cantidad }}</span></li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p style="color:var(--warm-400);">La API no proporcionó la lista de ingredientes para esta receta.</p>
+      {% endif %}
+    </div>
+
+    <div>
+      <h2 style="font-size:1.2rem; margin-bottom:1rem;">Preparación</h2>
+      {% if pasos %}
+        <ol class="lista-pasos">
+          {% for paso in pasos %}
+            <li>{{ paso }}</li>
+          {% endfor %}
+        </ol>
+      {% else %}
+        <p style="color:var(--warm-400);">La API no proporcionó instrucciones para esta receta.</p>
+      {% endif %}
+
+      {% if receta.strYoutube %}
+        <p style="margin-top:1.5rem;">
+          <a href="{{ receta.strYoutube }}" target="_blank" rel="noopener" class="btn btn-secundario">▶ Ver video en YouTube</a>
+        </p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

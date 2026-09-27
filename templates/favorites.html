@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block titulo %}Mis favoritos — SaborIA{% endblock %}
+
+{% block contenido %}
+<div class="contenedor" style="padding-top:2rem; padding-bottom:3rem;">
+  <h1 class="seccion-titulo" style="margin-bottom:1.5rem;"><small>Tu colección</small>Recetas favoritas</h1>
+
+  {% if not favoritos %}
+    <div class="estado-vacio">
+      <div class="icono">🤍</div>
+      Todavía no guardaste ninguna receta.<br>
+      <a href="{{ url_for('buscar') }}" class="btn btn-primario" style="margin-top:1rem;">Buscar recetas</a>
+    </div>
+  {% else %}
+    <div class="grilla-recetas">
+      {% for fav in favoritos %}
+      <div class="receta-card">
+        <div class="receta-card-imagen">
+          <a href="{{ url_for('receta_detalle', receta_id=fav.receta_id) }}">
+            <img src="{{ fav.receta_imagen }}" alt="{{ fav.receta_nombre }}" loading="lazy">
+          </a>
+          <form method="POST" action="{{ url_for('favoritos_quitar') }}">
+            <input type="hidden" name="receta_id" value="{{ fav.receta_id }}">
+            <button type="submit" class="btn-favorito activo" aria-label="Quitar de favoritos">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </button>
+          </form>
+        </div>
+        <div class="receta-card-contenido">
+          <a href="{{ url_for('receta_detalle', receta_id=fav.receta_id) }}" class="receta-card-titulo">{{ fav.receta_nombre }}</a>
+          <span style="font-size:.75rem; color:var(--warm-400);">Guardada el {{ fav.fecha_guardado.strftime('%d/%m/%Y') }}</span>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

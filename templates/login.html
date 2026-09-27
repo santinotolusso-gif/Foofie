@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block titulo %}Ingresar — SaborIA{% endblock %}
+
+{% block contenido %}
+<div class="pagina-auth">
+  <div class="tarjeta-simple">
+    <h1 style="font-size:1.5rem; margin-bottom:1.5rem; text-align:center;">Ingresar a SaborIA</h1>
+    <form method="POST">
+      <div class="campo">
+        <label for="email">Correo electrónico</label>
+        <input type="email" id="email" name="email" required autocomplete="email">
+      </div>
+      <div class="campo">
+        <label for="password">Contraseña</label>
+        <input type="password" id="password" name="password" required autocomplete="current-password">
+      </div>
+      <button type="submit" class="btn btn-primario btn-bloque">Ingresar</button>
+    </form>
+    <p style="text-align:center; margin-top:1.25rem; font-size:.9rem; color:var(--warm-500);">
+      ¿No tenés cuenta? <a href="{{ url_for('registro') }}" style="color:var(--olive-600); font-weight:600;">Registrate</a>
+    </p>
+  </div>
+</div>
+{% endblock %}
